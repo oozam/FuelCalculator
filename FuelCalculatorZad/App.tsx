@@ -18,15 +18,28 @@ import {
   StatusBar,
 } from 'react-native';
 
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
-import FuelForm from './FuelForm';
-
+const Stack = createStackNavigator<RootStackParams>();
+export type RootStackParams = {
+  FuelCalculator: undefined;
+  CalculatorResult: IFuelForm | undefined
+}
+import FuelForm, { IFuelForm } from './FuelForm';
+import CalculatorResult from './CalculatorResult';
 const App = () => {
   return (
-    <>
-      <Text>Type your fuel consumption details below</Text>
-      <FuelForm></FuelForm>
-    </>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="FuelCalculator">
+          <Stack.Screen name="FuelCalculator">
+            {props => <FuelForm />}
+          </Stack.Screen> 
+          <Stack.Screen name="CalculatorResult">
+            {props => <CalculatorResult />}
+          </Stack.Screen> 
+        </Stack.Navigator>
+      </NavigationContainer>
   );
 };
 
